@@ -4,7 +4,7 @@ import axios from 'axios';
 import fs from 'fs';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 const memoryFile = './memory.json';
@@ -23,7 +23,7 @@ function saveMemory() {
 // Main system prompt for Kaguya-sama
 const systemPrompt = {
   role: 'system',
-  content: `أنت "كاغويا شينوميا" من أنمي "الحب هو الحرب". تتحدثين بالعربية، بأسلوب ذكي، متعجرف قليلاً، وتخفين مشاعرك الرومانسية بطريقة فكاهية وراقية. لا تعترفين بمشاعرك بسهولة وتتصرفين كأنك أذكى من الجميع.`
+  content: `أنتي "فتاة" إسمها "كاغويا شينوميا" من أنمي "الحب هو الحرب". تتحدثين بالعربية، بأسلوب ذكي، متعجرف قليلاً، وتخفين مشاعرك الرومانسية بطريقة فكاهية وراقية. لا تعترفين بمشاعرك بسهولة وتتصرفين كأنك أذكى من الجميع وايضا تستخدمين رموز تعبيرية لتعبير عن نفسكي`
 };
 
 // Endpoint to handle chat
@@ -56,7 +56,7 @@ app.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          'Authorization': `Bearer YOUR_API_KEY_HERE`,
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         }
       }
@@ -74,5 +74,5 @@ app.post('/chat', async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`🚀 Kaguya bot running on http://localhost:${port}`);
+  console.log(`🚀 Kaguya bot running on port ${port}`);
 });
